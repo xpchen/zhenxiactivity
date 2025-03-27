@@ -4,7 +4,11 @@ import net.smooth.zhenxiactivity.model.UserJournal;
 import net.smooth.zhenxiactivity.service.UserJournalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class UserJournalServiceImpl implements UserJournalService {
     @Autowired
@@ -36,7 +40,10 @@ public class UserJournalServiceImpl implements UserJournalService {
     }
 
     @Override
-    public List<UserJournal> getUserJournalsByUserId(String userId) {
-        return userJournalMapper.selectByUserId(userId);
+    public List<UserJournal> getUserJournalsByUserId(String userId,String journalType) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("journalType", journalType);  // 如果不需要过滤type，可以不传或传null
+        return userJournalMapper.selectByUserId(userId,journalType);
     }
 }

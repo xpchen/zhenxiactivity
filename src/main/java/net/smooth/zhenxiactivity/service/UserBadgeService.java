@@ -10,5 +10,5 @@ public interface  UserBadgeService {
     UserBadge getUserBadgeById(Integer badgeId);
     List<UserBadge> getAllUserBadges();
     int removeUserBadge(Integer badgeId);
-    List<UserBadge> getUserBadgesByUserId(String userId);  // 新增的根据 userId 查询的方法
+    List<UserBadge> getUserBadgesByUserId(String userId,String badgeType);  // 新增的根据 userId 查询的方法
 }

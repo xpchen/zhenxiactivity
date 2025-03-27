@@ -3,7 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.smooth.zhenxiactivity.mapper.UserJournalMapper">
+    <resultMap id="userJournalResultMap" type="UserJournal">
+        <result property="journalId" column="journal_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="content" column="content"/>
+        <result property="publishedDate" column="published_date"/>
+        <result property="type" column="type"/>
+        <result property="path" column="path"/>
+    </resultMap>
     <insert id="insert" parameterType="UserJournal">
+        <selectKey keyProperty="journalId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         INSERT INTO user_journals (user_id, nick_name, content, path, type, published_date)
         VALUES (#{userId}, #{nickName}, #{content}, #{path}, #{type}, #{publishedDate})
     </insert>
@@ -14,7 +26,7 @@
         WHERE journal_id = #{journalId}
     </update>
 
-    <select id="selectById" resultType="UserJournal" parameterType="int">
+    <select id="selectById" resultMap="userJournalResultMap" parameterType="int">
         SELECT * FROM user_journals WHERE journal_id = #{journalId}
     </select>
 
@@ -22,8 +34,14 @@
         SELECT * FROM user_journals
     </select>
 
-    <select id="selectByUserId" resultType="UserJournal" parameterType="String">
-        SELECT * FROM user_journals WHERE user_id = #{userId}
+    <select id="selectByUserId" resultMap="userJournalResultMap" parameterType="map">
+        SELECT * FROM user_journals
+        <where>
+            user_id = #{userId}
+            <if test="journalType != null and journalType != ''">
+                AND badge_type = #{journalType}
+            </if>
+        </where>
     </select>
 
     <delete id="delete" parameterType="int">

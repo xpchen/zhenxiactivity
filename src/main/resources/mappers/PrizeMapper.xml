@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.smooth.zhenxiactivity.mapper.PrizeMapper">
+    <!-- 使用 resultMap 进行映射 -->
+    <resultMap id="PrizeResultMap" type="net.smooth.zhenxiactivity.model.Prize">
+        <id property="id" column="id"/>
+        <result property="prizeName" column="prize_name"/>
+        <result property="prizeType" column="prize_type"/>
+        <result property="stock" column="stock"/>
+        <result property="probability" column="probability"/>
+        <result property="prizeValue" column="prize_value"/>
+        <result property="isActive" column="is_active"/>
+        <result property="isPhysical" column="is_physical"/>
+        <result property="isPhysical" column="is_physical"/>
+        <result property="templateId" column="template_id"/>
+        <result property="effectiveDays" column="effective_days"/>
+    </resultMap>
+
+    <!-- 查询所有有效奖品 -->
+    <select id="getActivePrizes" resultMap="PrizeResultMap">
+        SELECT * FROM prize_pool WHERE is_active = TRUE
+    </select>
+
+    <!-- 根据ID查询奖品 -->
+    <select id="getPrizeById" resultMap="PrizeResultMap">
+        SELECT * FROM prize_pool WHERE id = #{id}
+    </select>
+    <select id="getPrizeByTemplateId" resultMap="PrizeResultMap">
+        SELECT * FROM prize_pool WHERE template_id = #{templateId}
+    </select>
+    <!-- 更新奖品库存 -->
+    <update id="updatePrizeStock">
+        UPDATE prize_pool SET stock = #{stock} WHERE id = #{id}
+    </update>
+    <!-- 插入奖品 -->
+    <insert id="insertPrize" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO prize_pool (prize_name, prize_type, stock, probability, prize_value, is_active, is_physical,template_id,effective_days)
+        VALUES (#{prizeName}, #{prizeType}, #{stock}, #{probability}, #{prizeValue}, #{isActive}, #{isPhysical},#{templateId}, #{effectiveDays})
+    </insert>
+</mapper>

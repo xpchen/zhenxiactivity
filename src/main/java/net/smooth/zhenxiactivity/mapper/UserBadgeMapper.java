@@ -2,8 +2,11 @@ package net.smooth.zhenxiactivity.mapper;
 
 import net.smooth.zhenxiactivity.model.UserBadge;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface UserBadgeMapper {
     int insert(UserBadge userBadge);
@@ -11,5 +14,5 @@ public interface UserBadgeMapper {
     UserBadge selectById(Integer badgeId);
     List<UserBadge> selectAll();
     int delete(Integer badgeId);
-    List<UserBadge> selectByUserId(String userId);  // 新增的根据 userId 查询的方法
+    List<UserBadge> selectByUserId(@Param("userId")String userId,@Param("badgeType") String  badgeType);
 }

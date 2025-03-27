@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
-import lombok.Setter;
 import net.smooth.zhenxiactivity.dto.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +37,7 @@ public class ApiService {
     private String responseData="";
 
     // API请求方法
-    public <T> ApiResponse<T> callApi(String method, String accessToken, Map<String, Object> bizContent) throws Exception {
+    public <T> ApiResponse<T> callApi(String method, String accessToken, Object bizContent) throws Exception {
         // 构建请求体
         long timestamp = System.currentTimeMillis() / 1000;  // 获取当前时间戳
         String sign = generateSign(method, timestamp, accessToken, bizContent);
@@ -52,7 +51,7 @@ public class ApiService {
         }
         params.put("timestamp", timestamp);
         params.put("sign", sign);
-        if(bizContent!=null && !bizContent.isEmpty())
+        if(bizContent!=null)
         {
             params.put("biz_content", new Gson().toJson(bizContent)); // 序列化 bizContent
         }
@@ -68,14 +67,20 @@ public class ApiService {
     }
 
     // 生成签名
-    private String generateSign(String method, long timestamp, String accessToken, Map<String, Object> bizContent) {
+    private String generateSign(String method, long timestamp, String accessToken, Object bizContent) {
         // 排序参数
         Map<String, String> sortedParams = new TreeMap<>();
         sortedParams.put("app_key", appKey);
         sortedParams.put("method", method);
-        sortedParams.put("access_token", accessToken);
+        if (!"buyer.oauth2.authorization".equalsIgnoreCase(method)) {
+            sortedParams.put("access_token", accessToken); // 注意：根据需要传递 access_token
+        }
+        //sortedParams.put("access_token", accessToken);
         sortedParams.put("timestamp", String.valueOf(timestamp));
-        sortedParams.put("biz_content", new Gson().toJson(bizContent));
+        if(bizContent!=null)
+        {
+            sortedParams.put("biz_content", new Gson().toJson(bizContent));
+        }
         // 拼接字符串
         StringBuilder signStr = new StringBuilder();
         for (Map.Entry<String, String> entry : sortedParams.entrySet()) {

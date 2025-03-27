@@ -10,4 +10,19 @@ public class ApiResponse<T> {
     private boolean success;
     private T data;
     private ErrorResponse error;
+
+    public ApiResponse(T data)
+    {
+        this.data = data;
+        this.success=true;
+    }
+    public ApiResponse(ErrorResponse error)
+    {
+        this.error =error;
+        this.success=false;
+    }
+    public ApiResponse()
+    {
+
+    }
 }

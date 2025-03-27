@@ -2,6 +2,8 @@ package net.smooth.zhenxiactivity.model;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class UserJournal {
     private Integer journalId;
@@ -10,5 +12,5 @@ public class UserJournal {
     private String content;
     private String path;
     private String type;
-    private String publishedDate;
+    private Date publishedDate;
 }

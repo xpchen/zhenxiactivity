@@ -6,7 +6,9 @@ import net.smooth.zhenxiactivity.service.UserBadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserBadgeServiceImpl implements UserBadgeService {
@@ -39,8 +41,15 @@ public class UserBadgeServiceImpl implements UserBadgeService {
     }
 
     @Override
-    public List<UserBadge> getUserBadgesByUserId(String userId) {
-        return userBadgeMapper.selectByUserId(userId);
+    public List<UserBadge> getUserBadgesByUserId(String userId,String badgeType) {
+
+try{
+    return userBadgeMapper.selectByUserId(userId,badgeType);
+}catch (Exception e)
+{
+    throw  e;
+}
+
     }
 }
 

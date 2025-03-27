@@ -2,8 +2,11 @@ package net.smooth.zhenxiactivity.mapper;
 
 import net.smooth.zhenxiactivity.model.UserJournal;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface UserJournalMapper {
     int insert(UserJournal userJournal);
@@ -11,5 +14,5 @@ public interface UserJournalMapper {
     UserJournal selectById(Integer journalId);
     List<UserJournal> selectAll();
     int delete(Integer journalId);
-    List<UserJournal> selectByUserId(String userId);  // 新增的根据 userId 查询的方法
+    List<UserJournal> selectByUserId(@Param("userId")String userId,@Param("journalType") String  journalType);
 }

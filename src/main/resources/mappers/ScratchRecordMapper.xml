@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.smooth.zhenxiactivity.mapper.ScratchRecordMapper">
+    <!-- 定义 resultMap -->
+    <resultMap id="scratchRecordResultMap" type="net.smooth.zhenxiactivity.model.ScratchRecord">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="prize_id" property="prizeId" />
+        <result column="is_winner" property="isWinner" />
+        <result column="recipient_name" property="recipientName" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="address_line1" property="addressLine1" />
+        <result column="address_line2" property="addressLine2" />
+        <result column="city" property="city" />
+        <result column="state" property="state" />
+        <result column="postal_code" property="postalCode" />
+        <result column="country" property="country" />
+        <result column="createdAt" property="created_at" />
+    </resultMap>
+    <!-- 插入数据 -->
+    <insert id="insertScratchRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO scratch_records
+        (user_id, prize_id, is_winner, recipient_name, phone_number, address_line1, address_line2, city, state, postal_code, country)
+        VALUES
+            (#{userId}, #{prizeId}, #{isWinner}, #{recipientName}, #{phoneNumber}, #{addressLine1}, #{addressLine2}, #{city}, #{state}, #{postalCode}, #{country})
+    </insert>
+
+    <!-- 根据 ID 查询单个记录 -->
+    <select id="getScratchRecordById" resultMap="scratchRecordResultMap">
+        SELECT * FROM scratch_records WHERE id = #{id}
+    </select>
+    <!-- 根据用户 ID 查询记录 -->
+    <select id="getScratchRecordsByUserId" resultMap="scratchRecordResultMap">
+        SELECT * FROM scratch_records WHERE user_id = #{userId}
+    </select>
+    <!-- 更新记录 -->
+    <update id="updateScratchRecord">
+        UPDATE scratch_records
+        SET recipient_name = #{recipientName},
+            phone_number = #{phoneNumber},
+            address_line1 = #{addressLine1},
+            address_line2 = #{addressLine2},
+            city = #{city},
+            state = #{state},
+            postal_code = #{postalCode},
+            country = #{country}
+        WHERE id = #{id}
+    </update>
+    <!-- 删除记录 -->
+    <delete id="deleteScratchRecord">
+        DELETE FROM scratch_records WHERE id = #{id}
+    </delete>
+</mapper>

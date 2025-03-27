@@ -3,7 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.smooth.zhenxiactivity.mapper.UserBadgeMapper">
+    <resultMap id="userBadgeResultMap" type="UserBadge">
+        <result property="badgeId" column="badge_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="dateEarned" column="date_earned"/>
+        <result property="type" column="type"/>
+        <result property="path" column="path"/>
+    </resultMap>
     <insert id="insert" parameterType="UserBadge">
+        <selectKey keyProperty="badgeId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         INSERT INTO user_badges (user_id, nick_name, path, date_earned, type)
         VALUES (#{userId}, #{nickName}, #{path}, #{dateEarned}, #{type})
     </insert>
@@ -14,16 +25,22 @@
         WHERE badge_id = #{badgeId}
     </update>
 
-    <select id="selectById" resultType="UserBadge" parameterType="int">
+    <select id="selectById" resultMap="userBadgeResultMap" parameterType="int">
         SELECT * FROM user_badges WHERE badge_id = #{badgeId}
     </select>
 
-    <select id="selectAll" resultType="UserBadge">
+    <select id="selectAll" resultMap="userBadgeResultMap" >
         SELECT * FROM user_badges
     </select>
 
-    <select id="selectByUserId" resultType="UserBadge" parameterType="String">
-        SELECT * FROM user_badges WHERE user_id = #{userId}
+    <select id="selectByUserId" resultMap="userBadgeResultMap"  parameterType="map">
+        SELECT * FROM user_badges
+        <where>
+            user_id = #{userId}
+            <if test="badgeType != null and badgeType != ''">
+                AND badge_type = #{badgeType}
+            </if>
+        </where>
     </select>
 
     <delete id="delete" parameterType="int">

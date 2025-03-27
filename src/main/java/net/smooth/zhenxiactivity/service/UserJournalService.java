@@ -10,5 +10,5 @@ public interface UserJournalService {
     UserJournal getUserJournalById(Integer journalId);
     List<UserJournal> getAllUserJournals();
     int removeUserJournal(Integer journalId);
-    List<UserJournal> getUserJournalsByUserId(String userId);  // 新增的根据 userId 查询的方法
+    List<UserJournal> getUserJournalsByUserId(String userId,String journalType);  // 新增的根据 userId 查询的方法
 }

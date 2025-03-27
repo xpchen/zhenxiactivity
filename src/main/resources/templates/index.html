@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>API 調用結果</title>
+</head>
+<body>
+<h1>API 調用結果頁面</h1>
+
+<div th:if="${error}">
+    <h2 style="color: red;">錯誤信息</h2>
+    <p th:text="${error}"></p>
+</div>
+
+<h2>應用資訊</h2>
+<ul>
+    <li><strong>App Key:</strong> <span th:text="${appKey}">N/A</span></li>
+    <li><strong>App Secret:</strong> <span th:text="${appSecret}">N/A</span></li>
+    <li><strong>Host:</strong> <span th:text="${host}">N/A</span></li>
+    <li><strong>API URL:</strong> <span th:text="${url}">N/A</span></li>
+    <li><strong>Authorization Code:</strong> <span th:text="${authorization_code}">N/A</span></li>
+</ul>
+
+<h2>請求資料</h2>
+<pre th:text="${request}">無請求資料</pre>
+
+<h2>回應資料</h2>
+<pre th:text="${response}">無回應資料</pre>
+
+</body>
+</html>

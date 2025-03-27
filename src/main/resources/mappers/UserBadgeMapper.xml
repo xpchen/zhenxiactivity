@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.smooth.zhenxiactivity.mapper.UserBadgeMapper">
+    <insert id="insert" parameterType="UserBadge">
+        INSERT INTO user_badges (user_id, nick_name, path, date_earned, type)
+        VALUES (#{userId}, #{nickName}, #{path}, #{dateEarned}, #{type})
+    </insert>
+
+    <update id="update" parameterType="UserBadge">
+        UPDATE user_badges
+        SET user_id = #{userId}, nick_name = #{nickName}, path = #{path}, date_earned = #{dateEarned}, type = #{type}
+        WHERE badge_id = #{badgeId}
+    </update>
+
+    <select id="selectById" resultType="UserBadge" parameterType="int">
+        SELECT * FROM user_badges WHERE badge_id = #{badgeId}
+    </select>
+
+    <select id="selectAll" resultType="UserBadge">
+        SELECT * FROM user_badges
+    </select>
+
+    <select id="selectByUserId" resultType="UserBadge" parameterType="String">
+        SELECT * FROM user_badges WHERE user_id = #{userId}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM user_badges WHERE badge_id = #{badgeId}
+    </delete>
+</mapper>

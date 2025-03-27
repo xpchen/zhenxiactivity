@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.smooth.zhenxiactivity.mapper.UserMapper">
+    <!-- 共享的 resultMap -->
+    <resultMap id="userResultMap" type="User">
+        <result property="userId" column="user_id"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="openId" column="open_id"/>
+        <result property="unionId" column="union_id"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="registerTimestamp" column="register_timestamp"/>
+        <result property="registerSource" column="register_source"/>
+    </resultMap>
+    <!-- 查询所有会员 -->
+    <select id="getUserList" resultMap="userResultMap">
+        SELECT * FROM users
+    </select>
+    <!-- 插入会员 -->
+    <insert id="addUser" parameterType="User">
+        INSERT INTO users (user_id, nick_name, mobile, open_id, union_id, avatar_url, tenant_id, register_timestamp, register_source)
+        VALUES (#{userId}, #{nickName}, #{mobile}, #{openId}, #{unionId}, #{avatarUrl}, #{tenantId}, #{registerTimestamp}, #{registerSource})
+    </insert>
+    <!-- 更新会员信息 -->
+    <update id="updateUser" parameterType="User">
+        UPDATE users
+        SET
+        nick_name = #{nickName},
+        mobile = #{mobile},
+        open_id = #{openId},
+        union_id = #{unionId},
+        avatar_url = #{avatarUrl},
+        tenant_id = #{tenantId},
+        register_timestamp = #{registerTimestamp},
+        register_source = #{registerSource}
+        WHERE user_id = #{userId}
+    </update>
+    <!-- 根据用户ID查询会员 -->
+    <select id="getUserByUserId" resultMap="userResultMap">
+        SELECT * FROM users WHERE user_id = #{userId}
+    </select>
+    <!-- 根据手机号查询会员 -->
+    <select id="getUserByMobile" resultMap="userResultMap">
+        SELECT * FROM users WHERE mobile = #{mobile}
+    </select>
+    <!-- 根据OpenId查询会员 -->
+    <select id="getUserByOpenId" resultMap="userResultMap">
+        SELECT * FROM users WHERE open_id = #{openId}
+    </select>
+</mapper>

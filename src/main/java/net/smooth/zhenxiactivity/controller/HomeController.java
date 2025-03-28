@@ -6,10 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     @GetMapping("/error")
-    public String index(Model model) {
+    public String error(Model model) {
 
         model.addAttribute("name", "Spring Boot");
         return "error";  // 返回的是 error.html
+    }
+
+    @GetMapping("/index")
+    public String index(Model model) {
+
+        model.addAttribute("name", "Spring Boot");
+        return "hellowolrd";  // 返回的是 error.html
     }
 
     @RequestMapping("/qwirXNGJlp.txt")
